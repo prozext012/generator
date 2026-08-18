@@ -280,8 +280,9 @@
     padding:14px 20px calc(14px + env(safe-area-inset-bottom));
     background:linear-gradient(180deg, rgba(21,25,35,0) 0%, var(--ink) 40%);
   }
+  .cta-row{width:100%; max-width:400px; display:flex; gap:10px;}
   .cta{
-    width:100%; max-width:400px; background:var(--teal); color:#0B221D; border:none; border-radius:16px;
+    flex:7 1 0; background:var(--teal); color:#0B221D; border:none; border-radius:16px;
     padding:17px; font-size:15.5px; font-weight:800; letter-spacing:.01em;
     display:flex; align-items:center; justify-content:center; gap:9px;
     box-shadow:0 10px 24px rgba(47,168,147,0.35); cursor:pointer;
@@ -289,6 +290,26 @@
   .cta svg{width:19px;height:19px;}
   .cta:active{transform:scale(.98); background:var(--teal-deep); color:var(--paper);}
   .cta.is-busy{opacity:.6; pointer-events:none;}
+  .cta-manual{
+    flex:3 1 0; background:transparent; color:var(--teal); border:2px solid var(--teal); border-radius:16px;
+    padding:15px 6px; font-size:14px; font-weight:800; letter-spacing:.01em;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+  .cta-manual:active{transform:scale(.98); background:var(--teal); color:#0B221D;}
+
+  /* Manual ticket input */
+  .manual-input{
+    flex:1; min-width:0; background:transparent; border:none; outline:none;
+    font-family:'JetBrains Mono', monospace; font-size:14px; font-weight:600; color:#241E12;
+  }
+  .manual-input::placeholder{color:#8a7a52; opacity:.7; font-weight:500;}
+  .manual-actions{padding:0 18px 18px;}
+  .manual-save{
+    width:100%; background:#241E12; color:var(--paper); border:none; border-radius:10px;
+    padding:12px; font-size:14px; font-weight:800; cursor:pointer;
+  }
+  .manual-save:active{transform:scale(.98);}
+  .manual-save:disabled{opacity:.45; pointer-events:none;}
 
   /* Sheet / modal */
   .overlay{
@@ -389,7 +410,10 @@
 </div>
 
 <div class="cta-wrap">
-  <button class="cta" id="generateBtn"><span id="ctaIcon"></span><span>Tarik Tiket Baru</span></button>
+  <div class="cta-row">
+    <button class="cta" id="generateBtn"><span id="ctaIcon"></span><span>Tarik Tiket Baru</span></button>
+    <button class="cta-manual" id="manualBtn">Manual</button>
+  </div>
 </div>
 
 <!-- Backup sheet -->
@@ -456,23 +480,23 @@ document.getElementById('icUpload').innerHTML = ICONS.upload;
 document.getElementById('searchIcon').innerHTML = ICONS.search;
 document.getElementById('clearIcon').innerHTML = ICONS.close;
 
-/* ---------- Data nama (gaya "nama.nama" khas username orang Indonesia) ---------- */
-const NAMES = ["Andika","Budi","Sinta","Rendi","Dewi","Fajar","Nadia","Yoga","Rara","Bima",
-"Wulan","Doni","Reza","Lestari","Agus","Putri","Hendra","Maya","Irfan","Sari",
-"Bayu","Citra","Galih","Indah","Joko","Kirana","Lukman","Mira","Nanda","Oki",
-"Prita","Rian","Salsa","Tono","Umar","Vina","Wahyu","Yulia","Zaki","Ayu",
-"Dimas","Erlangga","Fira","Gilang","Hana","Ilham","Jihan","Kevin","Laras","Marno",
-"Arka","Zahra","Ivan","Larasati","Fahri","Bagas","Nadira","Yudha","Ratna","Fajrul",
-"Anggun","Aldi","Diva","Farhan","Intan","Krisna","Melinda","Naufal","Olivia","Panji",
-"Raisa","Satrio","Talita","Vino","Wisnu","Yasmin","Ardian","Cahya","Dinda","Elang",
-"Fitri","Guntur","Hilda","Ikbal","Jasmine","Kanaya","Luthfi","Mahesa","Nabila","Okta"];
+/* ---------- Data nama (gaya "nama.nama" khas username cowok Indonesia) ---------- */
+const NAMES = ["Andika","Budi","Rendi","Fajar","Yoga","Bima","Doni","Reza","Agus","Hendra",
+"Irfan","Bayu","Galih","Joko","Lukman","Nanda","Oki","Rian","Tono","Umar",
+"Wahyu","Zaki","Dimas","Erlangga","Gilang","Ilham","Kevin","Marno","Arka","Ivan",
+"Fahri","Bagas","Yudha","Fajrul","Aldi","Farhan","Krisna","Naufal","Panji","Satrio",
+"Vino","Wisnu","Ardian","Cahya","Elang","Guntur","Ikbal","Luthfi","Mahesa","Okta",
+"Eko","Danang","Candra","Rizky","Anton","Deni","Fauzi","Herman","Iwan","Johan",
+"Kurnia","Leo","Made","Yusdi","Oscar","Putra","Rio","Surya","Taufik","Vicky",
+"Wayan","Yusuf","Zainal","Ahmad","Bambang","Chandra","Dedi","Edi","Feri","Sutrisno",
+"Heri","Indra","Jaka","Kadek","Ketut","Nyoman","Ridwan","Sugeng","Teguh","Wawan"];
 
-/* Segmen kedua (bergaya nama belakang umum Indonesia, bukan nama orang tertentu) */
-const SUFFIX_ONE = ["pradana","melinda","kusuma","widodo","ramadhan","anggraini","setiawan","putri",
-"pratama","amelia","wibowo","saputra","permata","hidayat","lestari","utami",
-"santoso","kurniawan","wijaya","hakim","gunawan","rahayu","suryani","kartika",
-"nugroho","firmansyah","maharani","susanti","hartono","budiman","syahputra","anjani",
-"prasetyo","handayani","wardhani","alamsyah","yulianti","purnama","salsabila","ardianto"];
+/* Segmen kedua (bergaya nama belakang/marga umum Indonesia, netral gender) */
+const SUFFIX_ONE = ["pradana","kusuma","widodo","ramadhan","setiawan","pratama","wibowo","saputra",
+"hidayat","santoso","kurniawan","wijaya","hakim","gunawan","nugroho","firmansyah",
+"hartono","budiman","syahputra","prasetyo","alamsyah","purnama","ardianto","susanto",
+"herdiansyah","sanjaya","wibisono","permadi","atmaja","kuncoro","siregar","hutapea",
+"nasution","simanjuntak","tampubolon","wirawan","yulianto","subagyo","riyanto","effendi"];
 
 const STORAGE_KEY = "kiosakun:tickets";
 let tickets = [];
@@ -658,6 +682,100 @@ function ticketMarkup(t, {isNew=false} = {}){
       </div>
     </div>
   `;
+}
+
+/* ---------- Render tiket manual (input username, password auto) ---------- */
+function manualTicketMarkup(){
+  return `
+    <div class="ticket new">
+      <div class="ticket-notch left"></div>
+      <div class="ticket-notch right"></div>
+      <div class="ticket-top">
+        <div>
+          <div class="serial">TIKET MANUAL</div>
+          <div class="serial">${new Date().toLocaleString('id-ID')}</div>
+        </div>
+        <div class="top-actions">
+          <button class="icon-ghost" id="manualCancelBtn" title="Batal">${ICONS.trash}</button>
+        </div>
+      </div>
+      <div class="perforation"></div>
+      <div class="ticket-body">
+        <div class="field">
+          <div class="field-label">${ICONS.user}Username</div>
+          <div class="field-row">
+            <input type="text" id="manualUsernameInput" class="manual-input" placeholder="contoh: yanto.ganteng" autocomplete="off" autocapitalize="off" spellcheck="false">
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-label">${ICONS.key}Password</div>
+          <div class="field-row">
+            <span class="val" id="manualPasswordPreview">—</span>
+          </div>
+        </div>
+      </div>
+      <div class="manual-actions">
+        <button class="manual-save" id="manualSaveBtn" disabled>Simpan Tiket</button>
+      </div>
+    </div>
+  `;
+}
+
+/* Ambil segmen pertama sebelum titik, kapital huruf pertama, buat password */
+function passwordFromUsername(uname){
+  const first = uname.split('.')[0].trim();
+  if (!first) return '';
+  return makePassword(cap(first));
+}
+
+function startManualTicket(){
+  const stage = document.getElementById('stage');
+  stage.innerHTML = manualTicketMarkup();
+
+  const input = document.getElementById('manualUsernameInput');
+  const preview = document.getElementById('manualPasswordPreview');
+  const saveBtn = document.getElementById('manualSaveBtn');
+  const cancelBtn = document.getElementById('manualCancelBtn');
+
+  input.addEventListener('input', ()=>{
+    const uname = input.value.trim().toLowerCase();
+    const pw = passwordFromUsername(uname);
+    preview.textContent = pw || '—';
+    saveBtn.disabled = !uname;
+  });
+
+  saveBtn.addEventListener('click', async ()=>{
+    const uname = input.value.trim().toLowerCase();
+    if (!uname) return;
+    const existing = new Set(tickets.map(t=>t.username));
+    if (existing.has(uname)){
+      toast('Username sudah ada, pakai yang lain', 'error');
+      return;
+    }
+    const password = passwordFromUsername(uname);
+    const serial = tickets.length ? Math.max(...tickets.map(t=>t.serial)) + 1 : 1;
+    const ticket = {
+      id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2)),
+      serial,
+      username: uname,
+      password,
+      createdAt: new Date().toISOString()
+    };
+
+    tickets.push(ticket);
+    renderStage(ticket);
+    renderHistory();
+
+    const ok = await saveTickets();
+    toast(ok ? 'Tiket manual disimpan' : 'Tersimpan di layar, backup otomatis gagal', ok ? 'success' : 'error');
+  });
+
+  cancelBtn.addEventListener('click', ()=>{
+    const sorted = [...tickets].sort((a,b)=> b.serial - a.serial);
+    renderStage(sorted[0] || null);
+  });
+
+  input.focus();
 }
 
 /* ---------- Render tiket mini (grid riwayat, 2 per baris) ---------- */
@@ -858,6 +976,7 @@ function importFile(file){
 
 /* ---------- Wire up UI ---------- */
 document.getElementById('generateBtn').addEventListener('click', generateTicket);
+document.getElementById('manualBtn').addEventListener('click', startManualTicket);
 
 const overlay = document.getElementById('overlay');
 document.getElementById('menuBtn').addEventListener('click', ()=>overlay.classList.add('show'));
