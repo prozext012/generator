@@ -480,23 +480,34 @@ document.getElementById('icUpload').innerHTML = ICONS.upload;
 document.getElementById('searchIcon').innerHTML = ICONS.search;
 document.getElementById('clearIcon').innerHTML = ICONS.close;
 
-/* ---------- Data nama (gaya "nama.nama" khas username cowok Indonesia) ---------- */
-const NAMES = ["Andika","Budi","Rendi","Fajar","Yoga","Bima","Doni","Reza","Agus","Hendra",
-"Irfan","Bayu","Galih","Joko","Lukman","Nanda","Oki","Rian","Tono","Umar",
-"Wahyu","Zaki","Dimas","Erlangga","Gilang","Ilham","Kevin","Marno","Arka","Ivan",
-"Fahri","Bagas","Yudha","Fajrul","Aldi","Farhan","Krisna","Naufal","Panji","Satrio",
-"Vino","Wisnu","Ardian","Cahya","Elang","Guntur","Ikbal","Luthfi","Mahesa","Okta",
-"Eko","Danang","Candra","Rizky","Anton","Deni","Fauzi","Herman","Iwan","Johan",
-"Kurnia","Leo","Made","Yusdi","Oscar","Putra","Rio","Surya","Taufik","Vicky",
-"Wayan","Yusuf","Zainal","Ahmad","Bambang","Chandra","Dedi","Edi","Feri","Sutrisno",
-"Heri","Indra","Jaka","Kadek","Ketut","Nyoman","Ridwan","Sugeng","Teguh","Wawan"];
-
-/* Segmen kedua (bergaya nama belakang/marga umum Indonesia, netral gender) */
-const SUFFIX_ONE = ["pradana","kusuma","widodo","ramadhan","setiawan","pratama","wibowo","saputra",
-"hidayat","santoso","kurniawan","wijaya","hakim","gunawan","nugroho","firmansyah",
-"hartono","budiman","syahputra","prasetyo","alamsyah","purnama","ardianto","susanto",
-"herdiansyah","sanjaya","wibisono","permadi","atmaja","kuncoro","siregar","hutapea",
-"nasution","simanjuntak","tampubolon","wirawan","yulianto","subagyo","riyanto","effendi"];
+/* ---------- Daftar 200 username tetap (milik pengguna, format nama.marga) ---------- */
+const USERNAMES = [
+"adi.kristanto","aditya.iswanto","agung.nugroho","agus.yuwono","aji.pratama","arka.wijaya","arya.prasetyo","bagas.junaedi",
+"bima.hartono","bimo.kristiawan","bram.iswanto","budi.nurhadi","candra.wardhana","dani.perkasa","dedi.syahputra","dimas.saputra",
+"doni.darmawan","dwi.ramadhani","edo.nugroho","eko.sasongko","erlangga.kristiawan","fadli.darmawan","fahri.wirawan","fajar.susanto",
+"farhan.handoko","fauzi.iswanto","gading.wardhana","gilang.adiputra","guntur.prabowo","hadi.kuncoro","hari.pratama","hendra.aditama",
+"ilham.ananda","indra.saputra","iqbal.nurcahyo","irfan.nurhadi","jefri.wardhana","joko.halim","ketut.saputra","kevin.maulana",
+"komang.suryanto","krisna.kristanto","lukman.kusuma","made.ramadhan","marno.fauzan","nugraha.pradana","oki.wicaksono","putra.susanto",
+"rafi.handoko","rendi.syahputra","reza.saputra","rian.prabowo","rizky.nurhadi","satria.nugroho","slamet.yuwono","teguh.prabowo",
+"tono.hidayat","umar.purnomo","wahyu.prasetyo","wisnu.susanto","yanto.nurcahyo","yoga.setiawan","yudha.basuki","yusuf.utomo",
+"zainal.yuwono","zaki.pratama","adi.alamsyah","aditya.kuncoro","agung.pratama","agus.kusuma","aji.santoso","andika.wibowo",
+"arka.setiawan","arya.maulana","bagas.wardhana","bayu.sasongko","bimo.wicaksono","bram.wahyudi","budi.saputra","candra.adiputra",
+"dani.wardana","dedi.darmawan","dimas.pradana","doni.iswanto","dwi.ananda","edo.prasetyo","eko.nurhadi","erlangga.kristanto",
+"fadli.nugroho","fajar.wahyudi","farhan.susanto","fauzi.utomo","gading.hartono","galih.syahputra","gilang.kristanto","guntur.junaedi",
+"hadi.prasetyo","hari.purnomo","hendra.perkasa","ilham.maulana","indra.hidayat","iqbal.prasetyo","irfan.basuki","jefri.nurcahyo",
+"joko.yuwono","ketut.halim","kevin.basuki","komang.adiputra","krisna.yuwono","lukman.sasongko","made.santoso","marno.firmansyah",
+"nugraha.santoso","oki.adiputra","putra.permadi","rafi.pratama","rendi.pratama","reza.sasongko","rian.adiputra","rizky.susanto",
+"satria.fauzan","slamet.suryanto","teguh.halim","tono.ramadhani","umar.kurniawan","wahyu.hartono","wisnu.santoso","yanto.handoko",
+"yoga.pratama","yudha.wardhana","yusuf.gunawan","zainal.alamsyah","zaki.permadi","adi.pradana","aditya.wirawan","agung.hidayat",
+"agus.ananda","aji.susanto","andika.iswanto","arka.kristanto","arya.ananda","bagas.kristanto","bayu.iswanto","bima.sasongko",
+"bimo.handoko","bram.syahputra","candra.pratama","dedi.handoko","dimas.kristiawan","doni.kristanto","dwi.halim","edo.utomo",
+"eko.kurniawan","erlangga.wardana","fadli.setiadi","fahri.kurniawan","fajar.setiadi","farhan.kristiawan","fauzi.wardana","gading.firmansyah",
+"galih.perkasa","gilang.kristiawan","guntur.suryanto","hadi.susanto","hari.junaedi","hendra.nurcahyo","ilham.wardhana","indra.nurcahyo",
+"irfan.iswanto","jefri.permadi","joko.utomo","ketut.junaedi","kevin.saputra","komang.utomo","krisna.sasongko","lukman.hartono",
+"made.gunawan","marno.alamsyah","nugraha.permadi","oki.wardhana","putra.suryanto","rafi.maulana","reza.prasetyo","rian.hartono",
+"rizky.wicaksono","satria.permadi","slamet.sasongko","teguh.kuncoro","tono.darmawan","umar.setiawan","wahyu.permadi","wisnu.iswanto",
+"yanto.wardhana","yoga.wardhana","yudha.yuwono","yusuf.darmawan","zainal.kuncoro","zaki.nurcahyo","adi.utomo","aditya.nugroho"
+];
 
 const STORAGE_KEY = "kiosakun:tickets";
 let tickets = [];
@@ -523,19 +534,15 @@ function setStorageStatus(ok, msg){
 function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
 
 function makeUsername(existing){
-  let tries = 0;
-  while (tries < 500){
-    const n = NAMES[Math.floor(Math.random()*NAMES.length)];
-    const suffix = SUFFIX_ONE[Math.floor(Math.random()*SUFFIX_ONE.length)];
-    const uname = `${n.toLowerCase()}.${suffix}`;
-    if (!existing.has(uname)) return {uname, n};
-    tries++;
+  const available = USERNAMES.filter(u => !existing.has(u));
+  if (available.length === 0){
+    // semua 200 username sudah kepakai -> fallback tambahin angka
+    const base = USERNAMES[Math.floor(Math.random()*USERNAMES.length)];
+    const uname = `${base}${Math.floor(Math.random()*90+10)}`;
+    return {uname, n: cap(uname.split('.')[0])};
   }
-  // fallback kalau 500 percobaan tabrakan semua: tambah angka 2 digit
-  const n = NAMES[Math.floor(Math.random()*NAMES.length)];
-  const suffix = SUFFIX_ONE[Math.floor(Math.random()*SUFFIX_ONE.length)];
-  const uname = `${n.toLowerCase()}.${suffix}${Math.floor(Math.random()*90+10)}`;
-  return {uname, n};
+  const uname = available[Math.floor(Math.random()*available.length)];
+  return {uname, n: cap(uname.split('.')[0])};
 }
 
 function makePassword(n){
